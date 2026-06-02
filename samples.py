@@ -14,8 +14,9 @@ CREATE TABLE IF NOT EXISTS userdata (
             """)
 
 username1, password1 = "admin", hashlib.sha256("admin".encode()).hexdigest()
-username2, password3 = "user", hashlib.sha256("user".encode()).hexdigest()
+username2, password2 = "user", hashlib.sha256("user".encode()).hexdigest()
 cur.execute("INSERT INTO userdata (username, password) Values (?, ?)", (username1, password1))
+cur.execute("INSERT INTO userdata (username, password) Values (?, ?)", (username2, password2))
 
 print(password1)
 
