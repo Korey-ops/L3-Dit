@@ -2,6 +2,22 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
+import socket
+
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(("localhost", 1111))
+
+
+
+
+def login():
+    Username = username_entry.get()
+    Password = Password_entry.get()
+
+    if Username and Password:
+        client.send(Username.encode())
+        client.send(Password.encode())
 
 
 #initialise main window
@@ -35,6 +51,7 @@ Password_Label.place(x=920, y=500)
 
 Password_entry = tk.Entry(root, width=40)
 Password_entry.place(x=840, y=530)
+
 
 
 
