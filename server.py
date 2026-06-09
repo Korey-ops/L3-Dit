@@ -3,18 +3,17 @@ import hashlib
 import socket
 import threading
 
+
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(("localhost", 1111))
 
 server.listen()
 
 
-def handle_connection(c) :
-    c.send("Username:".encode())
-    username = c.recv(1024).decode()
-    c.send("Password:".encode())
-    password = c.recv(1024)
-    password = hashlib.sha256(password).hexdigest()
+def handle_connection(c) :\
+
+    username = client.recv(1024)
+    password = client.recv(1024)
 
     conn = sqlite3.connect("userdata.db")
     cur = conn.cursor()

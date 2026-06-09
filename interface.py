@@ -16,8 +16,20 @@ def login():
     Password = Password_entry.get()
 
     if Username and Password:
-        client.send(Username.encode())
-        client.send(Password.encode())
+        try:
+
+            client.send(Username.encode())
+            client.send(Password.encode())
+        
+            response = client.recv(1024).decode()
+            if response == "login successfull!":
+                messagebox.showinfo("login", "welcome" + Username + "!")
+            else:
+                messagebox.showerror("Login", "invalid username or password")
+        except Exception as e:
+            messagebox.showerror("Connection error", str(e))
+    else:
+        messagebox.showwarning("Missing Fields", "Please enter both Username and Passwords")
 
 
 #initialise main window
@@ -52,7 +64,8 @@ Password_Label.place(x=920, y=500)
 Password_entry = tk.Entry(root, width=40)
 Password_entry.place(x=840, y=530)
 
-
+Login_button = tk.Button(root, text="login", command=login)
+Login_button.place(x=880, y=560 )
 
 
 root.mainloop()
