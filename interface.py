@@ -16,12 +16,14 @@ client.connect(("localhost", 1111))
 def login():
     username = username_entry.get()
     password = Password_entry.get()
+    
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
     if username and password:
         try:
 
             client.send(username.encode())
-            client.send(password.encode())
+            client.send(hashed_password.encode())
         
             response = client.recv(1024).decode()
             print("respons recieved")
