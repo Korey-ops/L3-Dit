@@ -22,8 +22,8 @@ def login():
     if username and password:
         try:
 
-            client.send(username.encode())
-            client.send(hashed_password.encode())
+            client.send((username + "\n").encode())
+            client.send((hashed_password + "\n").encode())
         
             response = client.recv(1024).decode()
             print("respons recieved")

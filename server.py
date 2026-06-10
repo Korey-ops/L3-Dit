@@ -10,25 +10,35 @@ server.bind(("localhost", 1111))
 server.listen()
 
 
-def handle_connection(c) :\
+def handle_connection(c) :
+    try:
+        while True:
 
-    username = client.recv(1024)
-    password = client.recv(1024)
+            username = client.recv(1024).strip()
+            password = client.recv(1024).strip()
+
+            if not username:
+                 break
     
     
 
 
-    conn = sqlite3.connect("userdata.db")
-    cur = conn.cursor()
+            conn = sqlite3.connect("userdata.db")
+            cur = conn.cursor()
 
-    cur.execute("SELECT * FROM userdata WHERE username = ? AND password = ?", (username, password))
+            cur.execute("SELECT * FROM userdata WHERE username = ? AND password = ?", (username, password))
+            verdict = cur.fetchall()
 
-    if cur.fetchall():
-        print("sending success")
-        c.send("login successful!".encode())
-    else:
-        print("sending failure")
-        c.send("login failed!".encode())
+            if verdict:
+             print("sending success")
+             c.send("login successfull!".encode())
+            else:
+                print("sending failure")
+                c.send("login failed!".encode())
+    except Exception as e:
+        print(f"connection error {e}")
+    finally:
+        c.close()
 
 
 while True:
