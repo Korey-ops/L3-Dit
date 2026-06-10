@@ -14,15 +14,21 @@ def handle_connection(c) :\
 
     username = client.recv(1024)
     password = client.recv(1024)
+    
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    
+
 
     conn = sqlite3.connect("userdata.db")
     cur = conn.cursor()
 
-    cur.execute("SELECT * FROM userdata WHERE username = ? AND password = ?", (username, password))
+    cur.execute("SELECT * FROM userdata WHERE username = ? AND password = ?", (username, hashed_password))
 
     if cur.fetchall():
+        print("sending success")
         c.send("login successful!".encode())
     else:
+        print("sending failure")
         c.send("login failed!".encode())
 
 

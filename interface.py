@@ -3,6 +3,8 @@ from tkinter import ttk
 from tkinter import messagebox
 from PIL import Image, ImageTk
 import socket
+import hashlib
+import random
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -12,20 +14,21 @@ client.connect(("localhost", 1111))
 
 
 def login():
-    Username = username_entry.get()
-    Password = Password_entry.get()
+    username = username_entry.get()
+    password = Password_entry.get()
 
-    if Username and Password:
+    if username and password:
         try:
 
-            client.send(Username.encode())
-            client.send(Password.encode())
+            client.send(username.encode())
+            client.send(password.encode())
         
             response = client.recv(1024).decode()
+            print("respons recieved")
             if response == "login successfull!":
-                messagebox.showinfo("login", "welcome" + Username + "!")
+                messagebox.showinfo("login", "welcome" + username + "!")
             else:
-                messagebox.showerror("Login", "invalid username or password")
+                messagebox.showerror("login", "Failed")
         except Exception as e:
             messagebox.showerror("Connection error", str(e))
     else:
@@ -65,7 +68,7 @@ Password_entry = tk.Entry(root, width=40)
 Password_entry.place(x=840, y=530)
 
 Login_button = tk.Button(root, text="login", command=login)
-Login_button.place(x=880, y=560 )
+Login_button.place(x=940, y=560 )
 
 
 root.mainloop()
