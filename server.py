@@ -14,8 +14,10 @@ def handle_connection(c) :
     try:
         while True:
 
-            username = client.recv(1024).strip()
-            password = client.recv(1024).strip()
+            username = client.recv(1024).strip().decode()
+            password = client.recv(1024).strip().decode()
+
+            hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
             if not username:
                  break
@@ -26,7 +28,7 @@ def handle_connection(c) :
             conn = sqlite3.connect("userdata.db")
             cur = conn.cursor()
 
-            cur.execute("SELECT * FROM userdata WHERE username = ? AND password = ?", (username, password))
+            cur.execute("SELECT * FROM userdata WHERE username = ? AND password = ?", (username, hashed_password))
             verdict = cur.fetchall()
 
             if verdict:

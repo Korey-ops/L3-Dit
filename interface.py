@@ -17,18 +17,17 @@ def login():
     username = username_entry.get()
     password = Password_entry.get()
     
-    hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
     if username and password:
         try:
 
             client.send((username + "\n").encode())
-            client.send((hashed_password + "\n").encode())
+            client.send((password + "\n").encode())
         
             response = client.recv(1024).decode()
             print("respons recieved")
             if response == "login successfull!":
-                messagebox.showinfo("login", "welcome" + username + "!")
+                messagebox.showinfo("login", "welcome " + username + "!")
             else:
                 messagebox.showerror("login", "Failed")
         except Exception as e:
