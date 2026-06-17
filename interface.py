@@ -8,7 +8,7 @@ import random
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(("localhost", 1111))
+client.connect(("192.168.1.111", 1111))
 
 
 

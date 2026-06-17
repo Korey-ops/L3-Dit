@@ -5,7 +5,8 @@ import threading
 
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-server.bind(("localhost", 1111))
+server.bind(("0.0.0.0", 1111))
+
 
 server.listen()
 
