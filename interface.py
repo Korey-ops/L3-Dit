@@ -53,23 +53,26 @@ canvas.pack(fill="both", expand=True)
 canvas.create_image(0, 0, image=bg_image, anchor="nw")
 canvas.image = bg_image
 
+login_frame = tk.Frame(root)
+login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
-Username_Label = tk.Label(root, text="Username", font=("arial", 12))
+
+Username_Label = tk.Label(login_frame, text="Username", font=("arial", 12))
 Username_Label.place(x=920, y=440)
 
 
-username_entry = tk.Entry(root, width=40)
+username_entry = tk.Entry(login_frame, width=40)
 username_entry.place(x=840, y=470)
 
 
-Password_Label = tk.Label(root, text="Password", font=("arial", 12))
+Password_Label = tk.Label(login_frame, text="Password", font=("arial", 12))
 Password_Label.place(x=920, y=500)
 
 
-Password_entry = tk.Entry(root, width=40)
+Password_entry = tk.Entry(login_frame, width=40)
 Password_entry.place(x=840, y=530)
 
-Login_button = tk.Button(root, text="login", command=login)
+Login_button = tk.Button(login_frame, text="login", command=login)
 Login_button.place(x=940, y=560 )
 
 
