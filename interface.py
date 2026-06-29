@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 import socket
 import hashlib
 import random
+from user import user_frame
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,8 +27,9 @@ def login():
         
             response = client.recv(1024).decode()
             print("respons recieved")
-            if response == "login successfull!":
+            if response == "login successfull!" and username == "user":
                 messagebox.showinfo("login", "welcome " + username + "!")
+                user_frame()
                 
             else:
                 messagebox.showerror("login", "Failed")
