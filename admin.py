@@ -11,3 +11,15 @@ cursor.execute("""
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 task TEXT NOT NULL)""")
 conn.commit()
+
+# Create gui
+
+window = tk.Tk()
+window.title("Admin-pannel")
+window.geometry("1920x1080")
+
+#title
+header_label = tk.Label(window, text="Mayfair Admin",)
+header_label.pack()
+
+window.mainloop()
