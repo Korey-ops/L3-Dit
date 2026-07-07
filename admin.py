@@ -8,5 +8,6 @@ conn = sqlite3.connect("jobs.db")
 cursor = conn.cursor()
 cursor.execute("""
                 CREATE TABLE IF NOT EXISTS task(
-                id INTEGER PRIMARY KEY AUTOINCREMENTED,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 task TEXT NOT NULL)""")
+conn.commit()
