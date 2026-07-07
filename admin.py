@@ -22,4 +22,14 @@ window.geometry("1920x1080")
 header_label = tk.Label(window, text="Mayfair Admin",)
 header_label.pack()
 
+Job_frame = tk.Frame(window)
+Job_frame.pack(fill=tk.BOTH, expand=True)
+
+canvas = tk.Canvas(Job_frame)
+canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+scrollbar = ttk.Scrollbar(Job_frame, orient="vertical", command=canvas.yview)
+scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+
 window.mainloop()
