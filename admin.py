@@ -31,5 +31,10 @@ canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 scrollbar = ttk.Scrollbar(Job_frame, orient="vertical", command=canvas.yview)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
+canvas.configure(yscrollcommand=scrollbar.set)
+canvas_inner = tk.Frame(canvas)
+canvas.create_window((0, 0), window=canvas_inner, anchor="nw")
+canvas_inner.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+
 
 window.mainloop()
