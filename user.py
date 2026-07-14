@@ -6,11 +6,21 @@ import socket
 import hashlib
 import random
 import pyautogui
+import sqlite3
+
+
+def user_frame():
 
 
 
-def user_Frame():
 
+    conn = sqlite3.connect("jobs.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+                CREATE TABLE IF NOT EXISTS task(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                task TEXT NOT NULL)""")
+    conn.commit()
 
 
     #initialise main window
@@ -37,6 +47,20 @@ def user_Frame():
     location_drop.pack(pady=10)
 
 
+    Name = tk.Label(user_frame, text="Name", font=("arial", 12))
+    Name.pack(pady=10)
+
+    entry_button = tk.Button(user_frame, text="enter request")
+    entry_button.pack(side=tk.BOTTOM, pady=10)
+
+
+    def add_request():
+        name = entry_button.get()
+        conn = sqlite3.connect("jobs.db")
+        cursor.execute("INSERT INTO people (name) \ VALUES (?), (name,)")
+        conn.commit()
+        conn.close()
+     
 
 
 
@@ -47,4 +71,7 @@ def user_Frame():
     root.mainloop()
 
 
-user_Frame()
+
+
+
+user_frame()

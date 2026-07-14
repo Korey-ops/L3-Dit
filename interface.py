@@ -55,6 +55,8 @@ canvas.pack(fill="both", expand=True)
 canvas.create_image(0, 0, image=bg_image, anchor="nw")
 canvas.image = bg_image
 
+
+
 login_frame = tk.Frame(root)
 login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
