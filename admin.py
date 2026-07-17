@@ -18,6 +18,16 @@ window = tk.Tk()
 window.title("Admin-pannel")
 window.geometry("1920x1080")
 
+
+def load_tasks():
+    for widget in canvas_inner.winfo_children():
+        widget.destroy
+
+    cursor.execute("SELECT * FROM tasks")
+    taks = cursor.fetchall()
+    for task in tasks:
+        add_task_item(task[0])
+
 #title
 header_label = tk.Label(window, text="Mayfair Admin",)
 header_label.pack()

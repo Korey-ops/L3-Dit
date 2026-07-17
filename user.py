@@ -47,8 +47,33 @@ def user_frame():
     location_drop.pack(pady=10)
 
 
+
+
+
+
+    def Clear_placeholder(event):
+        #if the text matches the palceholder clear it
+        if name_entry.get() == "enter your name...":
+            name_entry.delete(0, tk.END)
+            name_entry.config(foreground="black") #change text colour
+
+    def restore_placeholder(event):
+        if name_entry.get() == "":
+            name_entry.insert(0, "enter your name...")
+            name_entry.config(foreground="grey")
+
+
+
+
+
     Name = tk.Label(user_frame, text="Name", font=("arial", 12))
     Name.pack(pady=10)
+
+    name_entry = ttk.Entry(user_frame, width=40)
+    name_entry.insert(0, "enter your name...")
+    name_entry.config(foreground="grey")
+    name_entry.pack(pady=10)
+
 
     entry_button = tk.Button(user_frame, text="enter request")
     entry_button.pack(side=tk.BOTTOM, pady=10)
@@ -66,7 +91,8 @@ def user_frame():
 
 
 
-
+    name_entry.bind("<FocusIn>", Clear_placeholder)
+    name_entry.bind("<FocusOut>", restore_placeholder)
 
     root.mainloop()
 
