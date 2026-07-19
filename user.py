@@ -17,7 +17,7 @@ def user_frame():
     conn = sqlite3.connect("jobs.db")
     cursor = conn.cursor()
     cursor.execute("""
-                CREATE TABLE IF NOT EXISTS task(
+                CREATE TABLE IF NOT EXISTS jobs(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 task TEXT NOT NULL)""")
     conn.commit()
@@ -134,8 +134,18 @@ def user_frame():
     
     def add_request():
         name = entry_button.get()
+        location = location_drop.get()
+        typ = type_drop.get()
+        urgency = "★" * current_rating + "☆" * (5 - current_rating)
+        task = expla_entry.get()
         conn = sqlite3.connect("jobs.db")
-        cursor.execute("INSERT INTO people (name) \ VALUES (?), (name,)")
+        cursor.execute("""
+                        INSERT INTO jobs
+                         (name, location, type, urgency, taks) 
+                         VALUES (?, ?, ?, ?, ?)
+                         """,
+                         (name, location, typ, urgency, task)
+        )
         conn.commit()
         conn.close()
 

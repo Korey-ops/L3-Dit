@@ -10,6 +10,9 @@ cursor.execute("""
                 CREATE TABLE IF NOT EXISTS task(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 task TEXT NOT NULL)""")
+cursor.execute("""
+SELECT id, name, location, type, urgency, task 
+FROM jobs""")
 conn.commit()
 
 # Create gui
