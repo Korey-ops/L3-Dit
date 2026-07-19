@@ -75,20 +75,27 @@ def user_frame():
 
     def Clear_placeholder(event):
         #if the text matches the palceholder clear it
-        if name_entry.get() == "enter your name...":
-            name_entry.delete(0, tk.END)
-            name_entry.config(foreground="black") #change text colour
-        if expla_entry.get() == "please let us know whats wrong...":
-            expla_entry.delete(0, tk.END)
-            expla_entry.config(foreground="black")
+        #use a widget so both can be bound to the amse event
+        widget = event.widget
+
+        if widget.get() == "enter your name...":
+            widget.delete(0, tk.END)
+            widget.config(foreground="black") #change text colour
+
+        elif widget.get() == "please let us know whats wrong...":
+            widget.delete(0, tk.END)
+            widget.config(foreground="black")
 
     def restore_placeholder(event):
-        if name_entry.get() == "":
-            name_entry.insert(0, "enter your name...")
-            name_entry.config(foreground="grey")
-        if expla_entry.get() == "":
-            expla_entry.insert(0, "please let us know whats wrong...")
-            expla_entry.config(foreground="grey")
+        widget = event.widget
+
+        if widget.get() == name_entry == "":
+            widget.insert(0, "enter your name...")
+            widget.config(foreground="grey")
+
+        elif widget.get() == expla_entry == "":
+            widget.insert(0, "please let us know whats wrong...")
+            widget.config(foreground="grey")
 
 
 
@@ -107,7 +114,8 @@ def user_frame():
      
     expla_label = tk.Label(user_frame, text="input actual taks")
     expla_label.pack(pady=10)
-    expla_entry = ttk.Entry(user_frame, )
+    expla_entry = tk.Text(user_frame, width=150, height=20)
+    expla_entry.insert("1.0", "please let us know whats wrong...")
     expla_entry.pack(pady=10)
     
 
@@ -131,7 +139,7 @@ def user_frame():
         conn.commit()
         conn.close()
 
-        
+
     root.mainloop()
 
 
