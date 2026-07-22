@@ -66,5 +66,10 @@ def show_job(job):
     desc.pack(anchor="w")
     
 
+def load_tasks():
+    ...
+    for job in jobs:
+        show_job(job)
 
+load_tasks()
 window.mainloop()

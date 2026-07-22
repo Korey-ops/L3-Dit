@@ -19,6 +19,10 @@ def user_frame():
     cursor.execute("""
                 CREATE TABLE IF NOT EXISTS jobs(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT,
+                location TEXT,
+                type TEXT,
+                urgency TEXT,
                 task TEXT NOT NULL)""")
     conn.commit()
 
@@ -98,23 +102,24 @@ def user_frame():
         widget = event.widget
         content = get_text(widget)
 
-        if widget.get() == "enter your name...":
-            widget.delete(0, tk.END)
+        if content == "enter your name...":
+            clear_text(widget)
             widget.config(foreground="black") #change text colour
 
-        elif widget.get() == "please let us know whats wrong...":
-            widget.delete(0, tk.END)
+        elif content == "please let us know whats wrong...":
+            clear_text(widget)
             widget.config(foreground="black")
 
     def restore_placeholder(event):
         widget = event.widget
+        content = get_text(widget)
 
-        if widget.get() == name_entry == "":
-            widget.insert(0, "enter your name...")
+        if widget is name_entry and content == "":
+            insert_text(widget, "enter your name...")
             widget.config(foreground="grey")
 
-        elif widget.get() == expla_entry == "":
-            widget.insert(0, "please let us know whats wrong...")
+        elif widget is expla_entry and content == "":
+            insert_text(widget, "please let us know whats wrong...")
             widget.config(foreground="grey")
 
 
@@ -146,28 +151,27 @@ def user_frame():
     name_entry.bind("<FocusOut>", restore_placeholder)
     expla_entry.bind("<FocusIn>", Clear_placeholder)
     expla_entry.bind("<FocusOut>", restore_placeholder)
-
-
-    entry_button = tk.Button(user_frame, text="enter request")
-    entry_button.pack(side=tk.BOTTOM, pady=10)
     
     
     def add_request():
-        name = entry_button.get()
+        name = name_entry.get()
         location = location_drop.get()
         typ = type_drop.get()
         urgency = "★" * current_rating + "☆" * (5 - current_rating)
-        task = expla_entry.get()
+        task = expla_entry.get("1.0", "end-1c")
         conn = sqlite3.connect("jobs.db")
         cursor.execute("""
                         INSERT INTO jobs
-                         (name, location, type, urgency, taks) 
+                         (name, location, type, urgency, task) 
                          VALUES (?, ?, ?, ?, ?)
                          """,
                          (name, location, typ, urgency, task)
         )
         conn.commit()
         conn.close()
+
+    entry_button = tk.Button(user_frame, text="enter request", command=add_request)
+    entry_button.pack(side=tk.BOTTOM, pady=10)
 
 
     root.mainloop()
