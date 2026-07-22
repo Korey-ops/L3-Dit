@@ -73,10 +73,30 @@ def user_frame():
         stars.append(label)
   
 
+    def get_text(widget):
+        if isinstance(widget, tk.Text):
+            return widget.get("1.0", "end-1c")
+        return widget.get()
+ 
+    def clear_text(widget):
+        if isinstance(widget, tk.Text):
+            widget.delete("1.0", tk.END)
+        else:
+            widget.delete(0, tk.END)
+ 
+    def insert_text(widget, text):
+        if isinstance(widget, tk.Text):
+            widget.insert("1.0", text)
+        else:
+            widget.insert(0, text)
+
+
+
     def Clear_placeholder(event):
         #if the text matches the palceholder clear it
         #use a widget so both can be bound to the amse event
         widget = event.widget
+        content = get_text(widget)
 
         if widget.get() == "enter your name...":
             widget.delete(0, tk.END)

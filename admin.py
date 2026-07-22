@@ -12,7 +12,10 @@ cursor.execute("""
                 task TEXT NOT NULL)""")
 cursor.execute("""
 SELECT id, name, location, type, urgency, task 
-FROM jobs""")
+FROM jobs
+order BY urgency DESC
+""")
+jobs = cursor.fetchall()
 conn.commit()
 
 # Create gui
@@ -48,6 +51,20 @@ canvas.configure(yscrollcommand=scrollbar.set)
 canvas_inner = tk.Frame(canvas)
 canvas.create_window((0, 0), window=canvas_inner, anchor="nw")
 canvas_inner.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+
+def show_job(job):
+
+    job_card = tk.Frame(canvas_inner, relief="raised", bd=2, padx=10, pady=10)
+    job_card.pack(fill="x", padx=10, pady=10)
+
+    stars = "★" * job[4] + "☆" * (5-job[4])
+
+    title = tk.Label(job_card, text="f{stars}   {job[2]}")
+    title.pack(anchor="w")
+
+    desc = tk.Label(job_card, text=job[5][:60] + "...", anchor="w")
+    desc.pack(anchor="w")
+    
 
 
 window.mainloop()
