@@ -5,11 +5,10 @@ from PIL import Image, ImageTk
 import socket
 import hashlib
 import random
-from user import user_frame
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(("192.168.1.111", 1111))
+client.connect(("localhost", 1111))
 
 
 
@@ -29,7 +28,6 @@ def login():
             print("respons recieved")
             if response == "login successfull!" and username == "user":
                 messagebox.showinfo("login", "welcome " + username + "!")
-                user_frame()
                 
             else:
                 messagebox.showerror("login", "Failed")
