@@ -11,10 +11,10 @@ cursor.execute("""
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 task TEXT NOT NULL)""")
 cursor.execute("""
-SELECT id, name, location, type, urgency, task 
-FROM jobs
-order BY urgency DESC
-""")
+                SELECT id, name, location, type, urgency, task 
+                FROM jobs
+                order BY urgency DESC
+                """)
 jobs = cursor.fetchall()
 conn.commit()
 

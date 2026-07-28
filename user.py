@@ -56,7 +56,7 @@ def user_frame():
     stars = []
 
     def rating(val):
-        global current_rating
+        nonlocal current_rating
         current_rating = val
         for i, star in enumerate(stars):
             if i < val:
@@ -159,16 +159,19 @@ def user_frame():
         typ = type_drop.get()
         urgency = "★" * current_rating + "☆" * (5 - current_rating)
         task = expla_entry.get("1.0", "end-1c")
-        conn = sqlite3.connect("jobs.db")
-        cursor.execute("""
+
+        request_conn = sqlite3.connect("jobs.db")
+        request_cursor = request_conn.cursor()
+        request_cursor.execute("""
                         INSERT INTO jobs
-                         (name, location, type, urgency, task) 
-                         VALUES (?, ?, ?, ?, ?)
-                         """,
-                         (name, location, typ, urgency, task)
-        )
-        conn.commit()
-        conn.close()
+                        (name, location, type, urgency, task)
+                        VALUES (?, ?, ?, ?, ?)
+                        """,
+                        (name, location, typ, urgency, task)
+                        )
+        request_conn.commit()
+        request_conn.close()
+        messagebox.showinfo("Success", "Your request has been submitted.")
 
     entry_button = tk.Button(user_frame, text="enter request", command=add_request)
     entry_button.pack(side=tk.BOTTOM, pady=10)
