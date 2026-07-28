@@ -86,6 +86,9 @@ def show_job(job):
 
     desc = tk.Label(job_card, text=task[:60] + ("..." if len(task) > 60 else ""), anchor="w")
     desc.pack(anchor="w")
+
+    for widget in (job_card, title, desc):
+        widget.bind("<Button-1>", lambda e, j=job: open_job_detail(j))
     
 
 def load_tasks():
@@ -105,4 +108,9 @@ def load_tasks():
  
     for job in jobs:
         show_job(job)
+
+
+
+        
+load_tasks()
 window.mainloop()
