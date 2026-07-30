@@ -36,6 +36,8 @@ def user_frame():
     root.geometry("1920x1080")
     frame = tk.Frame(root)
     frame.place( relx=0.5, rely=0.5, anchor="center")
+    header_frame = tk.Frame(root)
+    header_frame.pack(anchor="center", fill="x")
     user_frame = tk.Frame(root)
     user_frame.pack(anchor="center")
 
@@ -47,7 +49,12 @@ def user_frame():
             from main import LogIn_Page
             LogIn_Page()
 
-    
+
+
+    Title = tk.Label(header_frame, text="Mayfair admin", font=("arial", 35))
+    Title.pack(side="left", padx=20)
+    logout = tk.Button(header_frame, text="Log Out", command=Log_Out, anchor="e")
+    logout.pack(side="right", padx=20)
 
     name_label = tk.Label(user_frame, text="Name")
     name_label.pack()
@@ -200,6 +207,10 @@ def user_frame():
         request_conn.commit()
         request_conn.close()
         messagebox.showinfo("Success", "Your request has been submitted.")
+
+
+        name.delete(0, tk.END)
+        location_drop.delete(0, tk.END)
 
     #put the button below the stars so a new frame
     entry_frame = tk.Frame(root)
