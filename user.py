@@ -9,6 +9,7 @@ import pyautogui
 import sqlite3
 
 
+
 def user_frame():
 
 
@@ -27,6 +28,7 @@ def user_frame():
     conn.commit()
 
 
+
     #initialise main window
     size = pyautogui.resolution()
     root = tk.Tk()
@@ -34,9 +36,18 @@ def user_frame():
     root.geometry("1920x1080")
     frame = tk.Frame(root)
     frame.place( relx=0.5, rely=0.5, anchor="center")
-
     user_frame = tk.Frame(root)
     user_frame.pack(anchor="center")
+
+
+    def Log_Out():
+            root.destroy()
+    
+            
+            from main import LogIn_Page
+            LogIn_Page()
+
+    
 
     name_label = tk.Label(user_frame, text="Name")
     name_label.pack()
@@ -197,10 +208,10 @@ def user_frame():
     entry_button.pack(side=tk.BOTTOM, pady=10)
 
 
+
+
+
+
     root.mainloop()
-
-
-
-
-
-user_frame()
+if __name__ == "__main__":
+    user_frame()

@@ -5,8 +5,6 @@ from tkinter import messagebox
 import sqlite3
 
 
-
-
 def admin_pannel():
 
     conn = sqlite3.connect("jobs.db")
@@ -23,18 +21,16 @@ def admin_pannel():
     jobs = cursor.fetchall()
     conn.commit()
 
-    # Create gui
-
-    window = tk.Tk()
-    window.title("Admin-pannel")
-    window.geometry("1920x1080")
+    root = tk.Tk()
+    root.title("Admin-pannel")
+    root.geometry("1920x1080")
 
 
     def open_job_detail(job):
         """Open a popup window showing the full details for one job."""
         job_id, name, location, job_type, urgency, task = job
  
-        detail = tk.Toplevel(window)
+        detail = tk.Toplevel(root)
         detail.title(f"Job #{job_id}")
         detail.geometry("500x400")
  
@@ -62,11 +58,23 @@ def admin_pannel():
         tk.Button(button_frame, text="Delete", command=delete_job, bg="#d9534f", fg="white").pack(side="left", padx=5)
         tk.Button(button_frame, text="Close", command=detail.destroy).pack(side="left", padx=5)
 
+
+    def Log_Out():
+        root.destroy()
+
+        
+        from main import LogIn_Page
+        LogIn_Page()
+
+
     #title
-    header_label = tk.Label(window, text="Mayfair Admin",)
+    header_label = tk.Label(root, text="Mayfair Admin", anchor="w")
     header_label.pack()
 
-    Job_frame = tk.Frame(window)
+    logout = tk.Button(root, text="Log Out", command=Log_Out, anchor="e")
+    logout.pack()
+
+    Job_frame = tk.Frame(root)
     Job_frame.pack(fill=tk.BOTH, expand=True)
 
     canvas = tk.Canvas(Job_frame)
@@ -115,8 +123,10 @@ def admin_pannel():
             show_job(job)
 
     load_tasks()
-    window.mainloop()
 
 
+    root.mainloop()
 
-admin_pannel()
+
+if __name__ == "__main__":
+    admin_pannel()
