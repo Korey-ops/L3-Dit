@@ -71,7 +71,7 @@ def user_frame():
 
 
     for i in range (1, 6):
-        label = tk.Label(star_frame, text="☆", foreground="gray", cursor="hand2")
+        label = tk.Label(star_frame, text="☆", foreground="gray", cursor="hand2", font=("Arial", 24))
         label.pack(side=tk.LEFT, padx=5)
         label.bind("<Button-1>", lambda e, v=i: rating(v))
         stars.append(label)
@@ -186,7 +186,10 @@ def user_frame():
         request_conn.close()
         messagebox.showinfo("Success", "Your request has been submitted.")
 
-    entry_button = tk.Button(user_frame, text="enter request", command=add_request)
+    #put the button below the stars so a new frame
+    entry_frame = tk.Frame(root)
+    entry_frame.pack()
+    entry_button = tk.Button(entry_frame, text="enter request", command=add_request)
     entry_button.pack(side=tk.BOTTOM, pady=10)
 
 
