@@ -66,13 +66,16 @@ def admin_pannel():
         from main import LogIn_Page
         LogIn_Page()
 
+    header_frame = tk.Frame(root, background="#D3D3D3")
+    header_frame.pack(anchor="center", fill="x")
+
 
     #title
-    header_label = tk.Label(root, text="Mayfair Admin", anchor="w")
-    header_label.pack()
+    header_label = tk.Label(header_frame, text="Mayfair Admin", font=("arial", 28), background="#D3D3D3")
+    header_label.pack(side="left", padx=35)
 
-    logout = tk.Button(root, text="Log Out", command=Log_Out, anchor="e")
-    logout.pack()
+    logout = tk.Button(header_frame, text="Log Out", command=Log_Out, font=("arial", 15), background="#D3D3D3")
+    logout.pack(side = "right", padx=35, pady=10)
 
     Job_frame = tk.Frame(root)
     Job_frame.pack(fill=tk.BOTH, expand=True)
@@ -94,10 +97,10 @@ def admin_pannel():
         job_card = tk.Frame(canvas_inner, relief="raised", bd=2, padx=10, pady=10, cursor="hand2")
         job_card.pack(fill="x", padx=10, pady=5)
 
-        title = tk.Label(job_card, text=f"{urgency}   {name}", anchor="w", font=("arial", 12, "bold"))
+        title = tk.Label(job_card, text=f"{urgency}   {name}", anchor="w", font=("arial", 25, "bold"))
         title.pack(anchor="w")
 
-        desc = tk.Label(job_card, text=task[:60] + ("..." if len(task) > 60 else ""), anchor="w")
+        desc = tk.Label(job_card, text=task[:60] + ("..." if len(task) > 60 else ""), anchor="w", font=("arial", 22))
         desc.pack(anchor="w")
 
         for widget in (job_card, title, desc):

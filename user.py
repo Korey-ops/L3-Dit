@@ -51,7 +51,7 @@ def user_frame():
 
 
 
-    Title = tk.Label(header_frame, text="Mayfair admin", font=("arial", 35))
+    Title = tk.Label(header_frame, text="Mayfair admin", font=("arial", 28))
     Title.pack(side="left", padx=20)
     logout = tk.Button(header_frame, text="Log Out", command=Log_Out, anchor="e")
     logout.pack(side="right", padx=20)
@@ -66,11 +66,11 @@ def user_frame():
     location_label = tk.Label(user_frame, text="Location")
     location_label.pack()
     location_options = ["room1", "room2", "room3", "room4", "room5", "room6", "room7", "room8", "room9", "room10", "room11", "hall"]
-    location_drop = ttk.Combobox(user_frame, values=location_options, state="readonly")
+    location_drop = ttk.Combobox(user_frame, values=location_options, state="readonly", width=40)
     location_drop.set("choose an option")
     location_drop.pack(pady=10)
 
-    type_label = tk.Label(user_frame, text="type")
+    type_label = tk.Label(user_frame, text="type", width=40)
     type_label.pack()
     type_options = ["plumbing", "maintenance", "damage"]
     type_drop = ttk.Combobox(user_frame, values=type_options, state="readonly")
@@ -150,16 +150,9 @@ def user_frame():
             widget.config(foreground="grey")
 
 
-
-
-
-    Name = tk.Label(user_frame, text="Name", font=("arial", 12))
-    Name.pack(pady=10)
-
-
     
      
-    expla_label = tk.Label(user_frame, text="input actual taks")
+    expla_label = tk.Label(user_frame, text="What happened?    ")
     expla_label.pack(pady=10)
     expla_entry = tk.Text(user_frame, width=50, height=10)
     expla_entry.insert("1.0", "please let us know whats wrong...")
