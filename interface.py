@@ -5,6 +5,8 @@ from PIL import Image, ImageTk
 import socket
 import hashlib
 import random
+from user import user_frame
+from admin import admin_pannel
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,6 +30,10 @@ def login():
             print("respons recieved")
             if response == "login successfull!" and username == "user":
                 messagebox.showinfo("login", "welcome " + username + "!")
+                user_frame()
+            elif response == "login successfull!" and username == "admin":
+                messagebox.showinfo("login", "welcome " + username + "!")
+                admin_pannel()
                 
             else:
                 messagebox.showerror("login", "Failed")
@@ -55,27 +61,30 @@ canvas.image = bg_image
 
 
 
-login_frame = tk.Frame(root)
+login_frame = tk.Frame(root, bg="")
 login_frame.place(relx=0.5, rely=0.5, anchor="center")
 
 
-Username_Label = tk.Label(login_frame, text="Username", font=("arial", 12))
-Username_Label.place(x=920, y=440)
+
+Username_Label = tk.Label(login_frame, text="Username")
+Username_Label.grid(row=0, column=0, pady=10, padx=10)
 
 
 username_entry = tk.Entry(login_frame, width=40)
-username_entry.place(x=840, y=470)
+username_entry.grid(row=0, column=1, pady=10, padx=10, )
 
 
-Password_Label = tk.Label(login_frame, text="Password", font=("arial", 12))
-Password_Label.place(x=920, y=500)
+Password_Label = tk.Label(login_frame, text="Password")
+Password_Label.grid(row=1, column=0, pady=10, padx=10)
 
 
-Password_entry = tk.Entry(login_frame, width=40)
-Password_entry.place(x=840, y=530)
+Password_entry = tk.Entry(login_frame, width=40, show="*")
+Password_entry.grid(row=1, column=1, pady=10, padx=10)
+
 
 Login_button = tk.Button(login_frame, text="login", command=login)
-Login_button.place(x=940, y=560 )
+Login_button.grid(row=2, column=0, columnspan=2, pady=20)
+
 
 
 root.mainloop()

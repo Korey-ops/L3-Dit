@@ -36,15 +36,24 @@ def user_frame():
     frame.place( relx=0.5, rely=0.5, anchor="center")
 
     user_frame = tk.Frame(root)
-    user_frame.pack()
+    user_frame.pack(anchor="center")
 
+    name_label = tk.Label(user_frame, text="Name")
+    name_label.pack()
+    name_entry = ttk.Entry(user_frame, width=40)
+    name_entry.insert(0, "enter your name...")
+    name_entry.config(foreground="grey")
+    name_entry.pack(pady=10)
 
-
+    location_label = tk.Label(user_frame, text="Location")
+    location_label.pack()
     location_options = ["room1", "room2", "room3", "room4", "room5", "room6", "room7", "room8", "room9", "room10", "room11", "hall"]
     location_drop = ttk.Combobox(user_frame, values=location_options, state="readonly")
     location_drop.set("choose an option")
     location_drop.pack(pady=10)
 
+    type_label = tk.Label(user_frame, text="type")
+    type_label.pack()
     type_options = ["plumbing", "maintenance", "damage"]
     type_drop = ttk.Combobox(user_frame, values=type_options, state="readonly")
     type_drop.set("choose an option")
@@ -67,7 +76,7 @@ def user_frame():
 
     #create 5 stars
     star_frame = tk.Frame(root)
-    star_frame.pack(padx=30)
+    star_frame.pack(padx=30, anchor="center")
 
 
     for i in range (1, 6):
@@ -129,11 +138,6 @@ def user_frame():
     Name = tk.Label(user_frame, text="Name", font=("arial", 12))
     Name.pack(pady=10)
 
-    name_entry = ttk.Entry(user_frame, width=40)
-    name_entry.insert(0, "enter your name...")
-    name_entry.config(foreground="grey")
-    name_entry.pack(pady=10)
-
 
     
      
@@ -188,7 +192,7 @@ def user_frame():
 
     #put the button below the stars so a new frame
     entry_frame = tk.Frame(root)
-    entry_frame.pack()
+    entry_frame.pack(anchor="center")
     entry_button = tk.Button(entry_frame, text="enter request", command=add_request)
     entry_button.pack(side=tk.BOTTOM, pady=10)
 
