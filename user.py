@@ -139,7 +139,7 @@ def user_frame():
      
     expla_label = tk.Label(user_frame, text="input actual taks")
     expla_label.pack(pady=10)
-    expla_entry = tk.Text(user_frame, width=150, height=20)
+    expla_entry = tk.Text(user_frame, width=50, height=10)
     expla_entry.insert("1.0", "please let us know whats wrong...")
     expla_entry.pack(pady=10)
     
@@ -159,6 +159,19 @@ def user_frame():
         typ = type_drop.get()
         urgency = "★" * current_rating + "☆" * (5 - current_rating)
         task = expla_entry.get("1.0", "end-1c")
+
+        if not name:
+            messagebox.showerror("Error", "Please enter your name.")
+            return
+        if location == "choose an option":
+            messagebox.showerror("Error", "Please select a location.")
+            return
+        if typ == "choose an option":
+            messagebox.showerror("Error", "Please select a type.")
+            return
+        if not task:
+            messagebox.showerror("Error", "Please describe the issue.")
+            return
 
         request_conn = sqlite3.connect("jobs.db")
         request_cursor = request_conn.cursor()
