@@ -201,9 +201,11 @@ def user_frame(username):
     entry_button = tk.Button(entry_frame, text="enter request", command=add_request)
     entry_button.pack(side=tk.BOTTOM, pady=10)
 
-
-
-
+    def call_help():
+        messagebox.showwarning("EMERGENCY","Call Admin, or emergency services 111 / 0272546342")
+    
+    emergency = tk.Button(entry_frame, text="EMERGENCY", command=call_help)
+    emergency.pack(side=tk.BOTTOM, pady=10)
 
 
     root.mainloop()
