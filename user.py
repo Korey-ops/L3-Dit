@@ -7,12 +7,12 @@ import hashlib
 import random
 import pyautogui
 import sqlite3
-
-
+from interface import login
+from interface import username
 
 def user_frame():
 
-
+    
 
 
     conn = sqlite3.connect("jobs.db")
@@ -33,12 +33,12 @@ def user_frame():
     size = pyautogui.resolution()
     root = tk.Tk()
     root.title("work forum")
-    root.geometry("1920x1080")
-    frame = tk.Frame(root)
-    frame.place( relx=0.5, rely=0.5, anchor="center")
-    header_frame = tk.Frame(root)
+    root.geometry("1920x1080")  
+    frame = tk.Frame(root, background="#87D9F1")
+    frame.pack( fill="both", expand=True)
+    header_frame = tk.Frame(frame, background="#485BC9")
     header_frame.pack(anchor="center", fill="x")
-    user_frame = tk.Frame(root)
+    user_frame = tk.Frame(frame, background="#87D9F1")
     user_frame.pack(anchor="center")
 
 
@@ -51,29 +51,29 @@ def user_frame():
 
 
 
-    Title = tk.Label(header_frame, text="Mayfair admin", font=("arial", 28))
-    Title.pack(side="left", padx=20)
-    logout = tk.Button(header_frame, text="Log Out", command=Log_Out, anchor="e")
+    Title = tk.Label(header_frame, text="Mayfair admin", font=("arial", 28), background="#485BC9")
+    Title.pack(side="left", padx=20, pady=20)
+    logout = tk.Button(header_frame, text="Log Out", command=Log_Out, anchor="e", background="#485BC9")
     logout.pack(side="right", padx=20)
 
-    name_label = tk.Label(user_frame, text="Name")
+    name_label = tk.Label(user_frame, text="Name", font=("arial", 20), background="#87D9F1")
     name_label.pack()
     name_entry = ttk.Entry(user_frame, width=40)
-    name_entry.insert(0, "enter your name...")
+    name_entry.insert(0, username)
     name_entry.config(foreground="grey")
     name_entry.pack(pady=10)
 
-    location_label = tk.Label(user_frame, text="Location")
+    location_label = tk.Label(user_frame, text="Location", font=("arial", 20), background="#87D9F1")
     location_label.pack()
     location_options = ["room1", "room2", "room3", "room4", "room5", "room6", "room7", "room8", "room9", "room10", "room11", "hall"]
-    location_drop = ttk.Combobox(user_frame, values=location_options, state="readonly", width=40)
+    location_drop = ttk.Combobox(user_frame, values=location_options, state="readonly", width=37, background="#87D9F1")
     location_drop.set("choose an option")
     location_drop.pack(pady=10)
 
-    type_label = tk.Label(user_frame, text="type", width=40)
+    type_label = tk.Label(user_frame, text="type", width=40, font=("arial", 20), background="#87D9F1")
     type_label.pack()
     type_options = ["plumbing", "maintenance", "damage"]
-    type_drop = ttk.Combobox(user_frame, values=type_options, state="readonly")
+    type_drop = ttk.Combobox(user_frame, values=type_options, state="readonly", width=37, background="#87D9F1")
     type_drop.set("choose an option")
     type_drop.pack(pady=10)
 
@@ -93,12 +93,12 @@ def user_frame():
         print(f"Selected rating: {val}")
 
     #create 5 stars
-    star_frame = tk.Frame(root)
+    star_frame = tk.Frame(frame, background="#87D9F1")
     star_frame.pack(padx=30, anchor="center")
 
 
     for i in range (1, 6):
-        label = tk.Label(star_frame, text="☆", foreground="gray", cursor="hand2", font=("Arial", 24))
+        label = tk.Label(star_frame, text="☆", foreground="gray", cursor="hand2", font=("Arial", 26))
         label.pack(side=tk.LEFT, padx=5)
         label.bind("<Button-1>", lambda e, v=i: rating(v))
         stars.append(label)
@@ -129,11 +129,7 @@ def user_frame():
         widget = event.widget
         content = get_text(widget)
 
-        if content == "enter your name...":
-            clear_text(widget)
-            widget.config(foreground="black") #change text colour
-
-        elif content == "please let us know whats wrong...":
+        if content == "please let us know whats wrong...":
             clear_text(widget)
             widget.config(foreground="black")
 
@@ -141,18 +137,14 @@ def user_frame():
         widget = event.widget
         content = get_text(widget)
 
-        if widget is name_entry and content == "":
-            insert_text(widget, "enter your name...")
-            widget.config(foreground="grey")
-
-        elif widget is expla_entry and content == "":
+        if widget is expla_entry and content == "":
             insert_text(widget, "please let us know whats wrong...")
             widget.config(foreground="grey")
 
 
     
      
-    expla_label = tk.Label(user_frame, text="What happened?    ")
+    expla_label = tk.Label(user_frame, text="What happened?", font=("arial", 20), background="#87D9F1")
     expla_label.pack(pady=10)
     expla_entry = tk.Text(user_frame, width=50, height=10)
     expla_entry.insert("1.0", "please let us know whats wrong...")
@@ -206,7 +198,7 @@ def user_frame():
         location_drop.delete(0, tk.END)
 
     #put the button below the stars so a new frame
-    entry_frame = tk.Frame(root)
+    entry_frame = tk.Frame(frame, background="#87D9F1")
     entry_frame.pack(anchor="center")
     entry_button = tk.Button(entry_frame, text="enter request", command=add_request)
     entry_button.pack(side=tk.BOTTOM, pady=10)

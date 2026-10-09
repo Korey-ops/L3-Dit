@@ -12,39 +12,40 @@ from admin import admin_pannel
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(("localhost", 1111))
 
+def login():
+    global username, password
+    username = username_entry.get()
+    password = Password_entry.get()
+
+
+    if username and password:
+        try:
+
+            client.send((username + "\n").encode())
+            client.send((password + "\n").encode())
+        
+            response = client.recv(1024).decode()
+            print("respons recieved")
+            if response == "login successfull!" and username == "user":
+                root.destroy()
+                user_frame()
+            elif response == "login successfull!" and username == "admin":
+                root.destroy()
+                admin_pannel()
+                
+            else:
+                messagebox.showerror("login", "Failed")
+        except Exception as e:
+            messagebox.showerror("Connection error", str(e))
+    else:
+        messagebox.showwarning("Missing Fields", "Please enter both Username and Passwords")
 
 def LogIn_Page():
 
+    global username_entry, Password_entry
 
-    def login():
-        username = username_entry.get()
-        password = Password_entry.get()
-    
+    login()
 
-        if username and password:
-            try:
-
-                client.send((username + "\n").encode())
-                client.send((password + "\n").encode())
-        
-                response = client.recv(1024).decode()
-                print("respons recieved")
-                if response == "login successfull!" and username == "user":
-                    root.destroy()
-                    user_frame()
-                elif response == "login successfull!" and username == "admin":
-                    root.destroy()
-                    admin_pannel()
-                
-                else:
-                    messagebox.showerror("login", "Failed")
-            except Exception as e:
-                messagebox.showerror("Connection error", str(e))
-        else:
-            messagebox.showwarning("Missing Fields", "Please enter both Username and Passwords")
-
-
-    
     #initialise main window
     root = tk.Tk()
     root.title("work forum")
