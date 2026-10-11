@@ -12,13 +12,14 @@ from admin import admin_pannel
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(("localhost", 1111))
 
+
 def login():
     global username, password
     username = username_entry.get()
     password = Password_entry.get()
 
-
     if username and password:
+
         try:
 
             client.send((username + "\n").encode())
@@ -26,12 +27,12 @@ def login():
         
             response = client.recv(1024).decode()
             print("respons recieved")
-            if response == "login successfull!" and username == "user":
-                root.destroy()
-                user_frame()
-            elif response == "login successfull!" and username == "admin":
+            if response == "login successfull!" and username == "admin":
                 root.destroy()
                 admin_pannel()
+            elif response == "login successfull!":
+                root.destroy()
+                user_frame(username)
                 
             else:
                 messagebox.showerror("login", "Failed")
@@ -42,9 +43,8 @@ def login():
 
 def LogIn_Page():
 
-    global username_entry, Password_entry
+    global root, username_entry, Password_entry
 
-    login()
 
     #initialise main window
     root = tk.Tk()

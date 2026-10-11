@@ -7,11 +7,8 @@ import hashlib
 import random
 import pyautogui
 import sqlite3
-from interface import login
-from interface import username
 
-def user_frame():
-
+def user_frame(username):
     
 
 
@@ -46,7 +43,7 @@ def user_frame():
             root.destroy()
     
             
-            from main import LogIn_Page
+            from interface import LogIn_Page
             LogIn_Page()
 
 
@@ -60,7 +57,6 @@ def user_frame():
     name_label.pack()
     name_entry = ttk.Entry(user_frame, width=40)
     name_entry.insert(0, username)
-    name_entry.config(foreground="grey")
     name_entry.pack(pady=10)
 
     location_label = tk.Label(user_frame, text="Location", font=("arial", 20), background="#87D9F1")
