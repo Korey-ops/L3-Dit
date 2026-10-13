@@ -7,6 +7,7 @@ import hashlib
 import random
 from user import user_frame
 from admin import admin_pannel
+import json
 
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -15,25 +16,21 @@ client.connect(("localhost", 1111))
 
 def login():
     global username, password
-    username = username_entry.get()
+    username = username_entry.get().strip()
     password = Password_entry.get()
 
     if username and password:
-
         try:
+            msg = json.dumps({"username": username, "password": password}) + "\n"
+            client.sendall(msg.encode())
 
-            client.send((username + "\n").encode())
-            client.send((password + "\n").encode())
-        
-            response = client.recv(1024).decode()
-            print("respons recieved")
-            if response == "login successfull!" and username == "admin":
+            response = client.recv(1024).decode().strip()
+            if response == "OK" and username == "admin":
                 root.destroy()
                 admin_pannel()
-            elif response == "login successfull!":
+            elif response == "OK":
                 root.destroy()
                 user_frame(username)
-                
             else:
                 messagebox.showerror("login", "Failed")
         except Exception as e:

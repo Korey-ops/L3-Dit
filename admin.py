@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import font 
 from tkinter import messagebox
 import sqlite3
-
+import net
 
 def admin_pannel():
 
@@ -47,12 +47,18 @@ def admin_pannel():
         desc_box.pack(fill="both", expand=True, padx=15, pady=5)
  
         def delete_job():
-            if messagebox.askyesno("Confirm", f"Delete job #{job_id}?"):
-                cursor.execute("DELETE FROM jobs WHERE id = ?", (job_id,))
-                conn.commit()
+            if not messagebox.askyesno("Confirm", f"Delete job #{job_id}?"):
+                return
+            try:
+                resp = net.request({"action": f"delete_job", "id": job_id})
+            except Exception as e:
+                messagebox.showerror("connection error", str(e))
+                return
+            if resp["ok"]:
                 detail.destroy()
                 load_tasks()
- 
+
+
         button_frame = tk.Frame(detail)
         button_frame.pack(pady=10)
         tk.Button(button_frame, text="Delete", command=delete_job, bg="#d9534f", fg="white").pack(side="left", padx=5)
@@ -60,9 +66,11 @@ def admin_pannel():
 
 
     def Log_Out():
+        try:
+            net.request({"action": "logout"})
+        except Exception:
+            pass
         root.destroy()
-
-        
         from main import LogIn_Page
         LogIn_Page()
 
@@ -110,13 +118,20 @@ def admin_pannel():
     def load_tasks():
         for widget in canvas_inner.winfo_children():
             widget.destroy()
-    
-        cursor.execute("""
-            SELECT id, name, location, type, urgency, task
-            FROM jobs
-            ORDER BY urgency DESC
-        """)
-        jobs = cursor.fetchall()
+
+        try:
+            resp = net.request({"action": "get_jobs"})
+        except Exception as e:
+            messagebox.showerror("Connection error", str(e))
+            return
+        if not resp["ok"]:
+            messagebox.showerror("Connection error", resp.get("error", "failed"))
+            return
+
+        jobs = resp["jobs"]
+        #most urgentfirst, counting the stars
+        jobs.sort(key=lambda j: j[4].count("★"), reverse=True)
+
 
         if not jobs:
             tk.Label(canvas_inner, text="No jobs submitted yet.", font=("arial", 12)).pack(pady=20)

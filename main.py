@@ -11,4 +11,4 @@ from admin import admin_pannel
 from user import user_frame
 from interface import LogIn_Page
 
-LogIn_Page()
+LogIn_Page()    

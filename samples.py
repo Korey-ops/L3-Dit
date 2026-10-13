@@ -21,6 +21,10 @@ username5, password5 = "James", hashlib.sha256("Bailey".encode()).hexdigest()
 username6, password6 = "Lana", hashlib.sha256("Richards".encode()).hexdigest()
 cur.execute("INSERT INTO userdata (username, password) Values (?, ?)", (username1, password1))
 cur.execute("INSERT INTO userdata (username, password) Values (?, ?)", (username2, password2))
+cur.execute("INSERT INTO userdata (username, password) Values (?, ?)", (username3, password3))
+cur.execute("INSERT INTO userdata (username, password) Values (?, ?)", (username4, password4))
+cur.execute("INSERT INTO userdata (username, password) Values (?, ?)", (username5, password5))
+cur.execute("INSERT INTO userdata (username, password) Values (?, ?)", (username6, password6))
 
 print(password1)
 
