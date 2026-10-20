@@ -8,16 +8,7 @@ import random
 from user import user_frame
 from admin import admin_pannel
 import json
-
-
-client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(("localhost", 1111))
-reader = client.makefile("r", encoding="utf-8")
-
-
-def request(obj):
-    client.sendall((json.dumps(obj) + "\n").encode())
-    return json.loads(reader.readline())
+from net import request
 
 
 def login():

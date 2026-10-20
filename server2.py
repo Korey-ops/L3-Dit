@@ -1,7 +1,7 @@
 import sqlite3, hashlib, socket, threading, json
 from contextlib import closing
 
-HOST, PORT = "0.0.0.0", 1111   # 0.0.0.0 = accept connections from other machines
+HOST, PORT = "192.168.1.116", 1111   # 0.0.0.0 = accept connections from other machines
 
 
 def send(c, obj):

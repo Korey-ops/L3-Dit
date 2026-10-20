@@ -7,6 +7,7 @@ import hashlib
 import random
 import pyautogui
 import sqlite3
+from net import request
 
 def user_frame(username):
     
@@ -157,11 +158,11 @@ def user_frame(username):
     
     
     def add_request():
-        name = name_entry.get()
+        name = name_entry.get().strip()
         location = location_drop.get()
         typ = type_drop.get()
         urgency = "★" * current_rating + "☆" * (5 - current_rating)
-        task = expla_entry.get("1.0", "end-1c")
+        task = expla_entry.get("1.0", "end-1c").strip()
 
         if not name:
             messagebox.showerror("Error", "Please enter your name.")
@@ -169,29 +170,30 @@ def user_frame(username):
         if location == "choose an option":
             messagebox.showerror("Error", "Please select a location.")
             return
-        if typ == "choose an option":
+        if type == "choose an option":
             messagebox.showerror("Error", "Please select a type.")
             return
-        if not task:
+        if not task or task == "please let us know whats wrong...":
             messagebox.showerror("Error", "Please describe the issue.")
             return
 
-        request_conn = sqlite3.connect("jobs.db")
-        request_cursor = request_conn.cursor()
-        request_cursor.execute("""
-                        INSERT INTO jobs
-                        (name, location, type, urgency, task)
-                        VALUES (?, ?, ?, ?, ?)
-                        """,
-                        (name, location, typ, urgency, task)
-                        )
-        request_conn.commit()
-        request_conn.close()
-        messagebox.showinfo("Success", "Your request has been submitted.")
+        try:
+             response = request({"action": "submit_job", "name": name,
+                                "location": location, "type": typ,
+                                "urgency": urgency, "task": task})
+        except Exception as e:
+            messagebox.showerror("Connection error", str(e))
+            return
 
-
-        name.delete(0, tk.END)
-        location_drop.delete(0, tk.END)
+        if response.get("ok"):
+            messagebox.showinfo("Success", "Your request has been submitted.")
+            location_drop.set("choose an option")
+            type_drop.set("choose an option")
+            clear_text(expla_entry)
+            insert_text(expla_entry, "please let us know whats wrong...")
+            expla_entry.config(foreground="grey")
+        else:
+            messagebox.showerror("Error", response.get("error", "Submission failed"))
 
     #put the button below the stars so a new frame
     entry_frame = tk.Frame(frame, background="#87D9F1")
