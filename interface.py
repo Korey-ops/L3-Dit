@@ -12,6 +12,12 @@ import json
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 client.connect(("localhost", 1111))
+reader = client.makefile("r", encoding="utf-8")
+
+
+def request(obj):
+    client.sendall((json.dumps(obj) + "\n").encode())
+    return json.loads(reader.readline())
 
 
 def login():
@@ -21,16 +27,15 @@ def login():
 
     if username and password:
         try:
-            msg = json.dumps({"username": username, "password": password}) + "\n"
-            client.sendall(msg.encode())
-
-            response = client.recv(1024).decode().strip()
-            if response == "OK" and username == "admin":
+            response = request({"action": "login",
+                                "username": username,
+                                "password": password})
+            if response.get("ok"):
                 root.destroy()
-                admin_pannel()
-            elif response == "OK":
-                root.destroy()
-                user_frame(username)
+                if response.get("is_admin"):
+                    admin_pannel()
+                else:
+                    user_frame(username)
             else:
                 messagebox.showerror("login", "Failed")
         except Exception as e:
