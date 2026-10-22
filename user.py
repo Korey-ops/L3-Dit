@@ -46,19 +46,19 @@ def user_frame(username):
 
 
     #close the window and go back to the login page
-    def Log_Out():
+    def log_out():
             root.destroy()
     
             
-            from interface import LogIn_Page
-            LogIn_Page()
+            from interface import login_page
+            login_page()
 
 
 
     #title and log out button in the header
-    Title = tk.Label(header_frame, text="Mayfair admin", font=("arial", 28), background="#485BC9")
-    Title.pack(side="left", padx=20, pady=20)
-    logout = tk.Button(header_frame, text="Log Out", command=Log_Out, anchor="e", background="#485BC9")
+    title = tk.Label(header_frame, text="Mayfair admin", font=("arial", 28), background="#485BC9")
+    title.pack(side="left", padx=20, pady=20)
+    logout = tk.Button(header_frame, text="Log Out", command=log_out, anchor="e", background="#485BC9")
     logout.pack(side="right", padx=20)
 
     #name box filled in with the username
@@ -134,7 +134,7 @@ def user_frame(username):
 
 
 
-    def Clear_placeholder(event):
+    def clear_placeholder(event):
         #if the text matches the palceholder clear it
         #use a widget so both can be bound to the amse event
         widget = event.widget
@@ -168,9 +168,9 @@ def user_frame(username):
 
 
     #bind the placeholder functions to focus events
-    name_entry.bind("<FocusIn>", Clear_placeholder)
+    name_entry.bind("<FocusIn>", clear_placeholder)
     name_entry.bind("<FocusOut>", restore_placeholder)
-    expla_entry.bind("<FocusIn>", Clear_placeholder)
+    expla_entry.bind("<FocusIn>", clear_placeholder)
     expla_entry.bind("<FocusOut>", restore_placeholder)
     
     
